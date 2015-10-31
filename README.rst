@@ -1,6 +1,6 @@
 coercion
 ========
-|ReadTheDocs| |TravisCI|
+|ReadTheDocs| |TravisCI| |CodeCov|
 
 This library provides functions that coerce datastructures into
 normalized forms.  For example, converting an arbitrary ``dict``
@@ -34,3 +34,7 @@ so it might as well be plopped into a reusable library.
    ?branch=master
    :target: https://travis-ci.org/dave-shawley/coercion
    :alt: [Build Status]
+.. |CodeCov| image:: https://codecov.io/github/dave-shawley/coercion/
+   coverage.svg?branch=master
+   :target: https://codecov.io/github/dave-shawley/coercion?branch=master
+   :alt: [Test Coverage]
