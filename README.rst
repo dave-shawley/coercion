@@ -1,5 +1,7 @@
 coercion
 ========
+|ReadTheDocs|
+
 This library provides functions that coerce datastructures into
 normalized forms.  For example, converting an arbitrary ``dict``
 into a form that is suitable for passing to ``json.dumps``.
@@ -23,3 +25,8 @@ so it might as well be plopped into a reusable library.
 .. _tornado: http://www.tornadoweb.org/
 .. _recursive_unicode: http://www.tornadoweb.org/en/stable/escape.html\
    #tornado.escape.recursive_unicode
+
+.. |ReadTheDocs| image:: https://readthedocs.org/projects/coercion/badge/
+   ?version=latest
+   :target: https://coercion.readthedocs.org/
+   :alt: [Documentation]
