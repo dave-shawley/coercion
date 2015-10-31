@@ -1,5 +1,7 @@
 coercion
 ========
+|ReadTheDocs| |TravisCI| |CodeCov|
+
 This library provides functions that coerce datastructures into
 normalized forms.  For example, converting an arbitrary ``dict``
 into a form that is suitable for passing to ``json.dumps``.
@@ -21,5 +23,18 @@ normalized string form is something that I've had to do repeatedly
 so it might as well be plopped into a reusable library.
 
 .. _tornado: http://www.tornadoweb.org/
-.. _recursive_unicode: http://www.tornadoweb.org/en/stable/escape.html\
+.. _recursive_unicode: http://www.tornadoweb.org/en/stable/escape.html
    #tornado.escape.recursive_unicode
+
+.. |ReadTheDocs| image:: https://readthedocs.org/projects/coercion/badge/
+   ?version=latest
+   :target: https://coercion.readthedocs.org/
+   :alt: [Documentation]
+.. |TravisCI| image:: https://travis-ci.org/dave-shawley/coercion.svg
+   ?branch=master
+   :target: https://travis-ci.org/dave-shawley/coercion
+   :alt: [Build Status]
+.. |CodeCov| image:: https://codecov.io/github/dave-shawley/coercion/
+   coverage.svg?branch=master
+   :target: https://codecov.io/github/dave-shawley/coercion?branch=master
+   :alt: [Test Coverage]

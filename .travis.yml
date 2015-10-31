@@ -1,0 +1,26 @@
+language: python
+python:
+- 2.7
+- 3.3
+- 3.4
+- 3.5
+- nightly
+- pypy
+- pypy3
+install:
+- pip install codecov coverage wheel
+script:
+- nosetests --with-coverage
+after_success:
+- codecov
+deploy:
+  provider: pypi
+  user: daveshawley
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    all_branches: true
+    repo: dave-shawley/coercion
+    python: 3.4
+  password:
+    secure: kr91tTPTqxTu7G8RfkvILA3Cp9IuaAP6eXFSSHGV36HQw63NGSNa9ZuAZ/H/LAXFy8LZeKCG8pm4Uw0IOZols9LDBmUHzUnvBV5Gh6bvK/tw76nxjvtIR1GL1xFSmf1mQbbmZxaMRPrzXuKQVL4VaeuJlgdwnhEvGALNrbwoweQwrmHhYiHo5ujQukeaLIPhFeTZ0SVAp9LFZtyuSU9WjdC9DHwIuXxkzyr+tmJX1WmWnq3DgV+KG3wnO4cfByt3FT4w9nlbOrAveGhCkPLEMGiOZW3urkxrpfUmEkZtYrqhnBog1vBo2YJ5ZQYC0kn4G2U3qWXwcbc2tRJj7bqSW3oPLL4VE1zSigT2d740D4Vsgxmhe6rHURWhGxW6vKmUC3JKgpQC/5+21oBQejFMxUAaIeZrZaLeQ4LAIwGZZ0EcNTJu7tcdx56ds88AKpEw8JjenU+7+17uvtVX8con8X2ZhGHYs57/IJacqXRqAMwEqEEiPSMBcj4RjmOL2+ZpdPn+7+1dDK2Qj7uEwCV25DxK3jbwt6aSf6sUbGGDHSNgyhCf9I557PGHUutqts8H8O1A+CKXE+sDr5/vS0rtoF9MROSfPXGRA2GsL1/S8D10JAqr+qsmShC91eKP6VB9uZI7NrukMpQTv+hmCPAK3FZqccH2Z1kuQ6HcL9bhUPs=
