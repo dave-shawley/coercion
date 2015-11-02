@@ -5,7 +5,7 @@ import sys
 import uuid
 
 
-version_info = (0, 0, 0)
+version_info = (1, 0, 0)
 """Library version as an ordered tuple of integers."""
 
 __version__ = '.'.join(str(c) for c in version_info)
