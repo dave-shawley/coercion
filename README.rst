@@ -22,6 +22,38 @@ recursively.  At the same time, the need to coerce values into a
 normalized string form is something that I've had to do repeatedly
 so it might as well be plopped into a reusable library.
 
+Examples
+--------
+The following example shows one of the underlying reasons that this
+library was created.  The commonly used msgpack implementation for
+python returns everything as byte strings which is problematic if
+you want to dump it as JSON since it will raise a ``TypeError`` if
+dictionary keys are not strings.  (This is where `recursive_unicode`_
+was so handy.)
+
+.. code-block:: python
+
+   >>> import json
+   >>> import coercion
+   >>> import msgpack
+   >>> bin_msg = msgpack.packb({u'\u00DCnicode': b'bytes', b'bytes': 'str'})
+   >>> decoded = msgpack.unpackb(bin_msg)
+   >>> decoded
+   {b'bytes': b'str', b'\xc3\x9cnicode': b'bytes'}
+   >>> json.dumps(decoded)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+     File "/Users/daveshawley/opt/lib/python3.5/json/__init__.py", line 230, in dumps
+       return _default_encoder.encode(obj)
+     File "/Users/daveshawley/opt/lib/python3.5/json/encoder.py", line 199, in encode
+       chunks = self.iterencode(o, _one_shot=True)
+     File "/Users/daveshawley/opt/lib/python3.5/json/encoder.py", line 257, in iterencode
+       return _iterencode(o, 0)
+   TypeError: keys must be a string
+   >>> json.dumps(coercion.normalize_collection(decoded))
+   '{"bytes": "str", "\\u00dcnicode": "bytes"}'
+
+
 .. _tornado: http://www.tornadoweb.org/
 .. _recursive_unicode: http://www.tornadoweb.org/en/stable/escape.html
    #tornado.escape.recursive_unicode
