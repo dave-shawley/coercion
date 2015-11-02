@@ -67,3 +67,62 @@ class PrimitiveStringifyTests(unittest.TestCase):
 
     def test_that_str_is_converted_to_unicode(self):
         self.assertEqual(coercion.stringify('one'), u'one')
+
+
+class NormalizeCollectionTests(unittest.TestCase):
+
+    def test_that_list_elements_are_transformed(self):
+        now = datetime.datetime.utcnow()
+        guid = uuid.uuid4()
+
+        result = coercion.normalize_collection([
+            b'\xce\xb1\xce\xb2\xce\xbe\xce\xb4\xce\xb5\xcf\x86\xce\xb3'
+            b'\xce\xb7\xce\xb9\xcf\x82\xce\xba\xce\xbb\xce\xbc\xce\xbd'
+            b'\xce\xbf\xcf\x80\xce\xb8\xcf\x81\xcf\x83\xcf\x84\xcf\x85'
+            b'\xcf\x89\xcf\x87\xcf\x88\xce\xb6',
+
+            u'\u043d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0439 '
+            u'\u0442\u0435\u043a\u0441\u0442 \u042e\u043d\u0438\u043a'
+            u'\u043e\u0434',
+
+            'simple native text string', 1, 2.0, True, False, None,
+            now, guid])
+
+        self.assertEqual(
+            result[0],
+            u'\u03b1\u03b2\u03be\u03b4\u03b5\u03c6\u03b3\u03b7\u03b9'
+            u'\u03c2\u03ba\u03bb\u03bc\u03bd\u03bf\u03c0\u03b8\u03c1'
+            u'\u03c3\u03c4\u03c5\u03c9\u03c7\u03c8\u03b6')
+
+        self.assertEqual(
+            result[1],
+            u'\u043d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0439 '
+            u'\u0442\u0435\u043a\u0441\u0442 \u042e\u043d\u0438\u043a'
+            u'\u043e\u0434')
+
+        self.assertEqual(result[2], 'simple native text string')
+        self.assertEqual(result[3], 1)
+        self.assertEqual(result[4], 2.0)
+        self.assertEqual(result[5], True)
+        self.assertEqual(result[6], False)
+        self.assertEqual(result[7], None)
+        self.assertEqual(result[8], now.strftime('%Y-%m-%dT%H:%M:%S.%f'))
+        self.assertEqual(result[9], str(guid))
+
+    def test_that_nested_sequences_are_transformed(self):
+        result = coercion.normalize_collection(
+            [b'one', 2, [u'three', b'four', 5.0]])
+        self.assertEqual(result, [u'one', 2, [u'three', u'four', 5.0]])
+
+    def test_that_flat_dictionarys_are_transformed(self):
+        result = coercion.normalize_collection({b'one': 1, 2: 'two',
+                                                3: u'three'})
+        self.assertEqual(result, {u'one': 1, 2: u'two', 3: u'three'})
+
+    def test_that_tuple_are_converted_to_lists(self):
+        result = coercion.normalize_collection([b'bytes', ('tuple', ['list'])])
+        self.assertEqual(result, [u'bytes', [u'tuple', [u'list']]])
+
+    def test_that_non_collection_root_raises_runtime_error(self):
+        with self.assertRaises(RuntimeError):
+            coercion.normalize_collection('a string')
