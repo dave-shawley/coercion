@@ -126,7 +126,7 @@ def normalize_collection(coll):
 
     while work_stack:
         value, inserter = work_stack.pop()
-        if isinstance(value, (list, tuple)):
+        if isinstance(value, (frozenset, list, set, tuple)):
             target = create_container(list, inserter)
             inserter = functools.partial(target.insert, 0)
             for item in value:

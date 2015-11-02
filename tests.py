@@ -126,3 +126,17 @@ class NormalizeCollectionTests(unittest.TestCase):
     def test_that_non_collection_root_raises_runtime_error(self):
         with self.assertRaises(RuntimeError):
             coercion.normalize_collection('a string')
+
+    def test_that_sets_are_converted_to_lists(self):
+        result = coercion.normalize_collection(
+            set(['a', u'b', b'c', frozenset([True, False])]))
+        self.assertIsInstance(result, list)
+        self.assertIn(u'a', result)
+        self.assertIn(u'b', result)
+        self.assertIn(u'c', result)
+
+        # remove non-set children so that we can examine the frozenset
+        for x in u'abc':
+            result.remove(x)
+        self.assertIsInstance(result[0], list)
+        self.assertEqual(sorted(result[0]), [False, True])
