@@ -1,6 +1,6 @@
 coercion
 ========
-|ReadTheDocs| |TravisCI| |CodeCov|
+|Version| |ReadTheDocs| |TravisCI| |CodeCov|
 
 This library provides functions that coerce datastructures into
 normalized forms.  For example, converting an arbitrary ``dict``
@@ -58,6 +58,9 @@ was so handy.)
 .. _recursive_unicode: http://www.tornadoweb.org/en/stable/escape.html
    #tornado.escape.recursive_unicode
 
+.. |Version| image:: https://img.shields.io/pypi/v/coercion.svg
+   :target: https://pypi.python.org/pypi/coercion
+   :alt: [PyPI]
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/coercion/badge/
    ?version=latest
    :target: https://coercion.readthedocs.org/
